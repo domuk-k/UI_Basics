@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Toast UI</title>
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400);
+
+    body {
+      font-family: 'Open Sans';
+      font-weight: 300;
+      background-color: #D6E1E5;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: #DB5B33;
+      font-weight: 300;
+      text-align: center;
+    }
+
+    .toast-container {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+
+    .toast {
+      background-color: blanchedalmond;
+      box-sizing: border-box;
+      width: 20vw;
+      padding: 15px;
+      transform: translate3d(100%, 0, 0);
+      animation: slideIn 1.2s ease-in-out forwards;
+    }
+
+    @keyframes slideIn {
+      to {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    .toast>h5,
+    .toast>p {
+      padding: 0;
+      margin: 0;
+    }
+
+    .toast>button {
+      background-color: none;
+      border: none;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    }
+
+    .success {
+      background-color: rgba(0, 204, 0, 0.287);
+    }
+
+    .error {
+      background-color: rgba(219, 0, 0, 0.445);
+
+    }
+
+    .warning {
+      background-color: rgba(255, 238, 0, 0.452);
+
+    }
+
+    .
+    /* CSS 작성 바랍니다. */
+  </style>
+</head>
+
+<body>
+  <h1>JavaScript Toast</h1>
+
+  <button class="show-success">Success</button>
+  <button class="show-error">Error</button>
+  <button class="show-warning">Warning</button>
+
+  <div class="toast-container">
+
+  </div>
+
+  <script>
+    const $toastContainer = document.querySelector('.toast-container')
+
+    document.body.onclick = ({ target }) => {
+      if (!target.matches('[class^=show]')) return;
+
+
+      const $toast = document.createElement('div')
+      const msg = target.className.split('-')[1];
+
+      let toastContent = `<div class="toast ${msg}">
+                      <h5>
+                        ${msg === 'success' ? 'Well Done!' : 'Check it out!'}
+                      </h5>
+                      <p>This is ${msg} alert</p>
+                      <button>X</button>
+                    </div>`
+
+      $toast.innerHTML += toastContent
+
+      $toastContainer.append($toast);
+      setTimeout(() => {
+        $toastContainer.removeChild($toastContainer.children[0])
+      }, 2300
+      )
+    }
+
+    $toastContainer.onclick = ({ target }) => {
+      if (!target.matches('button')) return;
+      target.parentNode.parentNode.remove()
+    }
+  </script>
+</body>
+
+</html>
